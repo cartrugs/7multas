@@ -66,12 +66,19 @@ const fragment = document.createDocumentFragment();
 // EVENTOS
 
 // Botón comprobar
-document.addEventListener('click', ({target}) => {
-    if (target.classList.contains('check-button')) {
-        const valoresObjMatriculas = target.id;
-        comprobacionMatriculaFunc(valoresObjMatriculas);
-    }
-})
+document.addEventListener('click', ({ target }) => {
+  if (target.classList.contains('check-button')) {
+    const valoresObjMatriculas = target.id;
+    comprobacionMatriculaFunc(valoresObjMatriculas)
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
 
 // FUNCIONES
 
@@ -86,13 +93,15 @@ const comprobacionMatriculaFunc = (matricula) => {
     return new Promise((resolve, reject) => {
       if (matriculaEncontrada) {
         if (matriculaEncontrada.multas !== '') {
-          resolve(true);
+          resolve(`La mnatricula ${matricula} tiene ${multas}`)
         } else {
-          reject(`La matrícula ${matricula} no tiene multas.`);
+          reject(`La matrícula ${matricula} no tiene multas.`)
         }
       } else {
-        reject(`La matrícula ${matricula} no existe.`);
+        reject(`La matrícula ${matricula} no existe.`)
       }
-    });
+      return matriculaEncontrada
+    })
+    
   };
   
