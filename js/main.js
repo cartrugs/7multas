@@ -4,6 +4,8 @@
 const matriculaInput = document.querySelector('#matriculaInput');
 const btnComprobar = document.querySelector('#btnComprobar');
 const dataTable = document.querySelector('#dataTable');
+const mensajeMaticulas = document.querySelector('#mensaje-maticulas');
+// const claveLocal = 
 
 // Array de objetos para almacenar matrículas y datos
 let matriculasArray = [
@@ -16,7 +18,7 @@ let matriculasArray = [
     },
     {
         id: '2',
-        matricula: '8725JFDN',
+        matricula: '8725JFD',
         modelo: 'HYUNDAI i-20,',
         propietario: 'Juan Fernández-Mar',
         multas: '3',
@@ -51,6 +53,7 @@ let matriculasArray = [
     }
 ];
 
+
 // Expresiones regulares
 const regEx = {
     matricula: /^[0-9]{4}[A-Z]{3}$/,
@@ -62,28 +65,25 @@ const regEx = {
 const fragment = document.createDocumentFragment();
 
 // Variable para recuperar localStorage
-const recuperarLocal = JSON.parse(localStorage.getItem(claveLocal));
-
+// const recuperarLocal = JSON.parse(localStorage.getItem(claveLocal));
 // EVENTOS
 
 // Botón comprobar
 document.addEventListener('click', ({ target }) => {
   if (target.classList.contains('check-button')) {
-    const valoresObjMatriculas = target.id;
+    const valoresObjMatriculas = matriculasArray.matricula;
     comprobacionMatriculaFunc(valoresObjMatriculas)
       .then((resp) => {
-        console.log(resp);
+        const mensajeMatriculas = document.getElementById('mensaje-matriculas');
+        mensajeMatriculas.textContent = resp;
       })
       .catch((error) => {
-        console.log(error);
+        const mensajeMatriculas = document.getElementById('mensaje-matriculas');
+        mensajeMatriculas.textContent = error;
       });
   }
-
-  if (target.classList.contains('data-table')) {
-    const valoresObjMatriculas = target.id;
-
-  }
 });
+
 
 
 // FUNCIONES
@@ -100,7 +100,7 @@ const comprobacionMatriculaFunc = (matricula) => {
     return new Promise((resolve, reject) => {
       if (matriculaEncontrada) {
         if (matriculaEncontrada.multas !== '') {
-          resolve(`La mnatricula ${matricula} tiene ${multas}`);
+          resolve(`La matricula ${matricula} tiene ${multas}`);
           localStorage.setItem('claveLocal',JSON.stringify(claveLocal));
         } else {
           reject(`La matrícula ${matricula} no tiene multas.`);
