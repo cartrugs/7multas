@@ -4,8 +4,9 @@
 const matriculaInput = document.querySelector('#matriculaInput');
 const btnComprobar = document.querySelector('#btnComprobar');
 const dataTable = document.querySelector('#dataTable');
-const mensajeMaticulas = document.querySelector('#mensaje-maticulas');
-// const claveLocal = 
+const mensajeMaticulas = document.querySelector('#mensaje-matriculas');
+// Variable para nombrar clave en localStorage
+const claveLocal = 'checkInLocal'; 
 
 // Array de objetos para almacenar matrículas y datos
 let matriculasArray = [
@@ -63,6 +64,9 @@ const regEx = {
 
 // fragment
 const fragment = document.createDocumentFragment();
+
+// Variable para recuperar localStorage. Tras el operador OR se proporciona un valor predeterminado en caso de que el  localStorage sea NULL.
+const recuperarLocal = JSON.parse(localStorage.getItem(claveLocal)) || [];
 
 // Variable para recuperar localStorage
 // const recuperarLocal = JSON.parse(localStorage.getItem(claveLocal));

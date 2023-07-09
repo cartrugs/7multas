@@ -36,7 +36,19 @@ h1 {
 
 .input-field {
     width: 200px;
+    text-align: center;
 }
+
+.input-field::placeholder {
+    text-align: center;
+}
+
+.input-field:hover {
+    background-color: rgb(198, 240, 240);
+    border-radius: 30px;
+    border: none;
+}
+
 
 .check-button {
     margin: auto 90px auto 2px ;
@@ -63,4 +75,12 @@ thead th {
 tbody td {
   padding: 10px;
   text-align: center;
+}
+
+#mensaje-matriculas {
+    margin-left: 50%;
+    margin-bottom: 35px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: rgb(128, 6, 6);
 }
