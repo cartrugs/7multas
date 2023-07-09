@@ -2,7 +2,6 @@
 
 // querySelector
 const matriculaInput = document.querySelector('#matriculaInput');
-
 const btnComprobar = document.querySelector('#btnComprobar');
 const dataTable = document.querySelector('#dataTable');
 
@@ -59,9 +58,11 @@ const regEx = {
     propietario: /^[a-zA-ZÑ-ÿ\s]{1,50}$/
 };
 
-
 // fragment
 const fragment = document.createDocumentFragment();
+
+// Variable para recuperar localStorage
+const recuperarLocal = JSON.parse(localStorage.getItem(claveLocal));
 
 // EVENTOS
 
@@ -77,31 +78,59 @@ document.addEventListener('click', ({ target }) => {
         console.log(error);
       });
   }
+
+  if (target.classList.contains('data-table')) {
+    const valoresObjMatriculas = target.id;
+
+  }
 });
 
 
 // FUNCIONES
 
-// Almacenar localStorage
-const alamcenarLocal = (id) => {
+// Función almacenar localStorage
+const almacenarLocal = (id) => {
+  localStorage.setItem('claveLocal',JSON.stringify(claveLocal));
 
 };
 
-// Funcion comprobar 
+// Función comprobar 
 const comprobacionMatriculaFunc = (matricula) => {
     const matriculaEncontrada = matriculasArray.find((item) => item.matricula === matricula);
     return new Promise((resolve, reject) => {
       if (matriculaEncontrada) {
         if (matriculaEncontrada.multas !== '') {
-          resolve(`La mnatricula ${matricula} tiene ${multas}`)
+          resolve(`La mnatricula ${matricula} tiene ${multas}`);
+          localStorage.setItem('claveLocal',JSON.stringify(claveLocal));
         } else {
-          reject(`La matrícula ${matricula} no tiene multas.`)
+          reject(`La matrícula ${matricula} no tiene multas.`);
+          localStorage.setItem('claveLocal',JSON.stringify(claveLocal));
         }
       } else {
-        reject(`La matrícula ${matricula} no existe.`)
+        reject(`La matrícula ${matricula} no existe.`);
+        localStorage.setItem('claveLocal',JSON.stringify(claveLocal));
       }
       return matriculaEncontrada
     })
     
   };
-  
+
+// Función pintar
+const crearTablaPintada = () => {
+  dataTable.innerHTML = '';
+  recuperarLocal.forEach((item) => {
+    const filaNueva = document.createElement('TR');
+    const celdaMatricula = document.createElement('TD');
+    celdaMatricula.textContent = matricula.matricula;
+    const celdaModelo = document.createElement('TD');
+    celdaModelo.textConetnt = matricula.modelo;
+    const celdaPropietario = document.createElement('TD');
+    celdaPropietario.textContent = matricula.propietario;
+    const celdaMultas = document.createElement('TD');
+    celdaPropietario.textContent = matricula.multas;
+
+    filaNueva.append(celdaMatricula, celdaModelo, celdaPropietario, celdaMultas);
+    
+  });
+  fragment.append(filaNueva);
+};
