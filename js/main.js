@@ -88,8 +88,6 @@ document.addEventListener('click', ({ target }) => {
   }
 });
 
-
-
 // FUNCIONES
 
 // Función almacenar localStorage
